@@ -1,0 +1,54 @@
+//AUTHOR:Kamal Wright
+//COURSE:CPT187
+//PURPOSE:This class will allow the user to create a file
+//STARTDATE: December 2nd 2019
+package edu.cpt187.wright.participation;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
+
+public class OrderWriter 
+{
+	//OrderWriter class constraints
+	private final int NOT_FOUND = -1;
+	private final int RESET_VALUE = 0;
+	private String masterFileName = "";
+	private int recordCount = 0;
+	//OrderWriter constructor
+	OrderWriter(String borrowedFileName)
+	{
+		masterFileName = borrowedFileName;
+	}
+	//Sets the Write Order
+	public void setWriteOrder(int borrowedItemID, String borrowedItemName, double borrowedItemPrice,
+			int borrowedQuantity, double borrowedOrderCost, int borrowedInStockCount)
+	{
+		recordCount = RESET_VALUE;
+
+		try
+		{
+			PrintWriter filePW = new PrintWriter(new FileWriter(masterFileName, true));
+			filePW.printf("%d\t%s\t%.2f\t%d\t%.2f\t%d\r",borrowedItemID, borrowedItemName, borrowedItemPrice, borrowedQuantity,
+					borrowedOrderCost, borrowedInStockCount);
+			recordCount++;
+			filePW.close();
+			
+		}
+		catch(IOException ex)
+		{
+			recordCount = NOT_FOUND;
+			
+		}
+	}
+	//Gets file name
+	public String getFileName()
+	{
+		return masterFileName;
+	}
+	//Gets Record Count
+	public int getRecordCount()
+	{
+		return recordCount;
+	}
+
+}
